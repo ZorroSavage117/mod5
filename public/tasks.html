@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Scheduled Tasks</title>
+</head>
+<body>
+    <h1>View Scheduled Tasks</h1>
+    <ul id="taskList"></ul>
+
+    <script>
+        // Fetch and display scheduled tasks
+        fetch('/tasks')
+        .then(response => response.json())
+        .then(tasks => {
+            const taskList = document.getElementById('taskList');
+            tasks.forEach(task => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Name: ${task.name}, Schedule: ${task.schedule}, Command: ${task.command}`;
+                taskList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+</body>
+</html>

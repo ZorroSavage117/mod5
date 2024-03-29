@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Task</title>
+</head>
+<body>
+    <h1>Schedule Task</h1>
+    <form id="scheduleForm">
+        <label for="name">Task Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="schedule">Schedule (cron format):</label><br>
+        <input type="text" id="schedule" name="schedule" placeholder="* * * * *"><br>
+        <label for="command">Command to Execute:</label><br>
+        <input type="text" id="command" name="command"><br><br>
+        <button type="submit">Schedule Task</button>
+    </form>
+
+    <script>
+        // Handle form submission
+        document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Send POST request to schedule task
+            fetch('/schedule', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
